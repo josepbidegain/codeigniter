@@ -40,6 +40,7 @@
 
 $route['default_controller'] = "auth";
 $route['404_override'] = '';
+$route['probando']='auth/test';
 //$route['auth'] = 'authController';
 
 /* End of file routes.php */

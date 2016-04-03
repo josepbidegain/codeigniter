@@ -1,3 +1,4 @@
+<? if ( isset($error) && $error ) {echo $error;} ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,12 +12,23 @@
         <div class="col-sm-6 col-md-4 col-md-offset-4">
             <h1 class="text-center login-title">Ingrese a nuestro sistema</h1>
             <div class="account-wall">
-                <img class="profile-img" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120"
-                    alt="">
-                <form class="form-signin" action="auth/pepe" method="post">               
+                
+
+                <?=validation_errors('<div class="errors">','</div>'); ?>
+                <!-- <form class="form-signin" action='http://localhost/codeigniter/index.php/auth/login/' method="post">              -->
+                <?php
+                $form_attributes = array(
+                "id"     => "reg_form",
+                "name"   => "reg_form",
+                "method" => "post",
+                "class"  => "form-signin"
+                );
+                echo form_open(base_url()."index.php/auth/login/", $form_attributes);
+                echo form_hidden('token',$token);
+                ?>
 				
-                <input type="text" class="form-control" placeholder="Email" required autofocus>
-                <input type="password" class="form-control" placeholder="Password" required>
+                <input type="text" name="email" class="form-control" placeholder="Email" required autofocus <?= set_value('email'); ?> >
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">
                     Ingresar</button>
                 <label class="checkbox pull-left">

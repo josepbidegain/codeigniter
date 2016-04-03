@@ -22,7 +22,7 @@
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost/codeigniter';
+$config['base_url'] = 'http://localhost/codeigniter/';
 
 /*
 |--------------------------------------------------------------------------
@@ -52,8 +52,8 @@ $config['index_page'] = '';
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= 'AUTO';
-
+//$config['uri_protocol']	= 'AUTO';
+$config['uri_protocol'] = "REQUEST_URI";
 /*
 |--------------------------------------------------------------------------
 | URL suffix

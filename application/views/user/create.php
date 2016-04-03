@@ -1,48 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!--Llammamos a nuestra hoja de estilos con esta línea-->
-<link rel="stylesheet" type="text/css" href="http://localhost/envio_email_CI/css/estilos.css" />
-<title>Formulario de registro</title>
-</head>
-<body>
+
 <fieldset>
 	<legend>Formulario de registro</legend>
-		<?php echo form_open("http://localhost/envio_email_CI/envio_email/nuevo_usuario") ?>
+		<?php echo form_open("index.php/userController/store") ?>
 			<table>
 				<tr>
 					<td>
 						Nombre:
 					</td>
 					<td>
-						<input type="text" name="nom" value="<?php echo set_value('nom') ?>" />
-					</td>
-				</tr>
-				<tr><input type="hidden" name="grabar" value="si" />
-					<td>
-						Email:
-					</td>
-					<td>
-						<input type="text" name="correo" value="<?php echo set_value('correo') ?>" />
+						<input type="text" name="nombre" value="<?php echo set_value('nombre') ?>" />
 					</td>
 				</tr>
 				<tr>
 					<td>
-						Usuario:
+						Email:
 					</td>
 					<td>
-						<input type="text" name="nick" value="<?php echo set_value('nick') ?> "/>
+						<input type="email" name="email" value="<?php echo set_value('email') ?>" />
 					</td>
 				</tr>
+				
 				<tr>
 					<td>
 						Password:
 					</td>
 					<td>
-						<input type="password" name="pass" />
+						<input type="password" name="password" />
 					</td>
 				</tr>
+				<tr>
+					<td>
+						Role:
+					</td>
+					<td>
+						<select name="type">
+							<option value='admin'>Admin</option>
+							<option value='user'>User</option>
+						</select>
+					</td>
+				</tr>
+
 				<tr>
 				<td></td>
 				<td>
@@ -54,7 +51,7 @@
 					
 					</td>
 					<td>
-						<input type="submit" value="Registrarme" title="Registrarme" />
+						<input type="submit" value="Crear" />
 					</td>
 				</tr>
 			</table>
