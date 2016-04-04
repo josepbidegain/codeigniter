@@ -28,9 +28,7 @@ class Auth extends CI_Controller {
 				break;		
 		}
 	}
-	public function test(){
-		echo "PROBANDO NUEVO";
-	}
+
 	/*
 		Chequeo token generado al crear formulario, si es el mismo que se envio y quedo guardado en sesion, entonces es una petcion valida.
 	*/
@@ -74,7 +72,7 @@ class Auth extends CI_Controller {
 				
 			}
 		}else{
-			redirect(base_url().'auth/login');
+			redirect(base_url().'auth/logout');
 		}
 
 	}
@@ -92,7 +90,7 @@ class Auth extends CI_Controller {
 
 	public function logout()
 	{
-		$this->session->sess_destroy();
-		$this->index();
+		$this->session->sess_destroy();		
+		redirect(base_url());
 	}
 }

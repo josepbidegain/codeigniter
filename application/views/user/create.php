@@ -1,6 +1,8 @@
 
 <fieldset>
 	<legend>Formulario de registro</legend>
+
+	<?php 	echo $this->session->flashdata('message');	?>
 		<?php echo form_open("index.php/userController/store") ?>
 			<table>
 				<tr>
@@ -8,7 +10,7 @@
 						Nombre:
 					</td>
 					<td>
-						<input type="text" name="nombre" value="<?php echo set_value('nombre') ?>" />
+						<input required type="text" class="form-control" name="name" value="<?php echo set_value('nombre') ?>" />
 					</td>
 				</tr>
 				<tr>
@@ -16,7 +18,7 @@
 						Email:
 					</td>
 					<td>
-						<input type="email" name="email" value="<?php echo set_value('email') ?>" />
+						<input required type="email" class="form-control" name="email" value="<?php echo set_value('email') ?>" />
 					</td>
 				</tr>
 				
@@ -25,7 +27,7 @@
 						Password:
 					</td>
 					<td>
-						<input type="password" name="password" />
+						<input required type="password" class="form-control" name="password" />
 					</td>
 				</tr>
 				<tr>
@@ -50,7 +52,7 @@
 					<td>
 					
 					</td>
-					<td>
+					<td>					
 						<input type="submit" value="Crear" />
 					</td>
 				</tr>

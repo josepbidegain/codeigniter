@@ -5,8 +5,9 @@ class UserController extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('user');
-        $this->load->helper("url");        
-        $this->load->library("session");
+		$this->load->helper(array("url","form"));        
+        $this->load->library(array('session','form_validation'));        
+        $this->is_autenticate();
 	}
 
 	public function index(){
@@ -24,8 +25,9 @@ class UserController extends CI_Controller {
 			//cargo objeto usuario si existe, sino asigno false a variable $user
 			$user = $this->user->getUser($id);
 		    if ($user != false){
-			    $data['name'] = $user['name'];
-			    $data['email'] = $user['email'];
+			    $data['user'] = $user;			    
+				
+				$this->load_header();
 			    $this->load->view('user/detail', $data);
 			}else{//sino existe usuario o esta inactivo o no se pudo cargar hago logout		
 				$this->load->view('auth/logout');
@@ -44,37 +46,37 @@ class UserController extends CI_Controller {
 	}
 
 	//Inserto nuevo usuario en la BD
-	public function store(){
-        
-        //compruebo si se a enviado submit
-        if($this->input->post("submit")){
+	public function store(){       
          
-         	$this->form_validation->set_message('required', 'El campo %s es obligatorio');
-			$this->form_validation->set_message('valid_email', 'El campo %s debe ser un email');	
-			$this->form_validation->set_message('min_length', 'El Campo %s debe tener un minimo de %d Caracteres');
+     	$this->form_validation->set_message('required', 'El campo %s es obligatorio');
+		$this->form_validation->set_message('valid_email', 'El campo %s debe ser un email');	
+		$this->form_validation->set_message('min_length', 'El Campo %s debe tener un minimo de %d Caracteres');
 
-			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim|xss_clean');
-			$this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[3]|max_length[150]|xss_clean');
+		$this->form_validation->set_rules('name', 'Name', 'required|trim|xss_clean');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim|xss_clean');
+		$this->form_validation->set_rules('password', 'Password', 'required|trim|xss_clean');
 
-			if($this->form_validation->run() == FALSE)
-			{
-				$this->load->view('user/create');
-			}else{
-
-			}	
+		if($this->form_validation->run() == FALSE)
+		{ 
+			$this->session->set_flashdata('message', 'Error al crear');
+			redirect('index.php/userController/create');
+			$this->load->view('header');
+			$this->load->view('user/create');
+		}else{
+			
 	        //llamo al metodo store del modelo para insertar usuario
 	        $add=$this->user->store($this->input->post());
-	        }
+	    
 	        if($add){	            
 	            $message = 'Usuario añadido correctamente';	            
 	        }else{
 	            $message = 'No se pudo crear usuario';
 	        }
 	        $this->session->set_flashdata('message', $message);
-         
+	     
 	        //redirecciono la pagina a la url por defecto
 	        redirect(base_url());
-    
+    	}
 	}
 
 	//muestro vista con formulario para editar usuario
@@ -110,6 +112,7 @@ class UserController extends CI_Controller {
 		
 	}
 
+	//funcion para cargar header comun a todas las paginas
 	public function load_header(){
 		$this->load->view('header',array('user_logged'=>$this->session->userdata('name')));	
 	}
@@ -131,6 +134,14 @@ class UserController extends CI_Controller {
 			return true;
 		}
 		return false;
+	}
+
+	//revis si tiene sesion iniciada sino lo saco del sistema
+	private function is_autenticate(){
+		if (!$this->session->userdata('is_logued_in')){			
+			redirect('index.php/auth/logout');
+		}
+		return true;		
 	}
 }
 

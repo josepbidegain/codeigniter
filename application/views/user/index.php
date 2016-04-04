@@ -44,13 +44,16 @@
               timer = setTimeout(function(){
                 var keywords = $('#search').val();
                 if ( keywords.length > 0 ){
-                    jQuery.ajax({
+                    $.ajax({
                       type: "POST",
                       url: "<?php echo base_url(); ?>" + "index.php/ajaxController/getUsers",
                       dataType: 'text',
                       data: {name: keywords},
                       success: function(res){
-                        $('#ajax-results').html(data);
+                        $('#ajax-results').html(res);
+                      },
+                      error: function(e){
+                        console.log(e);
                       }
                     });
                  }

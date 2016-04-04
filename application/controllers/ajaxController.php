@@ -7,12 +7,17 @@ class AjaxController extends CI_Controller {
 		$this->load->model('user');
 	}
 
+	public function index(){
+		return 'hola';
+	}
 	public function getUsers(){
-		if ($this->input->is_ajax_request()){
-			$name  = $this->input->post('name');
-			$data['users'] = $this->user->getUsersByTag($name);
 
-			return $this->load->view('user/ajax_users',$data);
-		}
+		$name  = $this->input->post('name');
+		//echo $name;
+		$users = $this->user->getUsersByTag($name);
+		$data['users'] = $users;
+		
+		return $this->load->view('user/ajax_users',$data);
+		
 	}	
 }

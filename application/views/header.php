@@ -18,7 +18,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="<?=base_url();?>index.php/userController">Inicio</a>
-      <a class="navbar-brand" href="<?=base_url();?>index.php/userController/create">Create User</a>
+      <a class="navbar-brand" href="<?=base_url();?>index.php/userController/create">Crear Usuario</a>
 
     </div>
 
@@ -27,14 +27,9 @@
       
       <ul class="nav navbar-nav navbar-right">        
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome <?php echo $user_logged; ?> <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-          </ul>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Bienvenido <?php echo $user_logged; ?> <span class="caret"></span></a>
+          <a href="<?php echo base_url() ?>index.php/auth/logout">Salir</a>
+          
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->

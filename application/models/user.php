@@ -44,7 +44,7 @@ class User extends CI_Model{
     public function store($data){
 
 		$data = array(
-            'name' => $data['nombre'],
+            'name' => $data['name'],
             'email' => $data['email'],            
             'password' => sha1($data['password']),
             'active' => 1,
@@ -80,18 +80,13 @@ class User extends CI_Model{
         $this->db->delete('users'); 
         return true;
     }
-/*
-    	$query=$this->db->query("SELECT email FROM users WHERE email LIKE '$email'");
-        if($query->num_rows()==0){
-            $query=$this->db->query("INSERT INTO users VALUES(NULL,'$name','$email','$password','$acive','$date_added');");
-            if($consulta==true){
-              return true;
-            }else{
-                return false;
-            }
-        }else{
-            return false;
-        }
+
+    public function getUsersByTag($tag){
+
+        $this->db->select("id,name from users where name like '%$tag%' or email like '%$$tag%'");       
+        
+        $query = $this->db->get();
+        return $query->result();
+
     }
-*/
 }
