@@ -11,9 +11,15 @@ class UserController extends CI_Controller {
 	}
 
 	public function index(){
-		$data['users'] = $this->user->getUsers();		
-		$this->load_header();
-		$this->load->view('user/index',$data);
+		if ($this->isAdmin() ){
+			$data['users'] = $this->user->getUsers();		
+			$this->load_header();
+			$this->load->view('user/index',$data);
+		}else{
+			$id = $this->session->userdata('user_id');
+			redirect("index.php/userController/show/".$id,'refresh');				
+		}
+		
 	}
 
 	public function show() {
@@ -21,7 +27,7 @@ class UserController extends CI_Controller {
 		$id = $this->uri->segment(3);
 		//reviso si usuario logueado es admin o mismo el usuario que quiere ingresar a su perfil
 		if ($this->checkPermision($id)){
-
+			
 			//cargo objeto usuario si existe, sino asigno false a variable $user
 			$user = $this->user->getUser($id);
 		    if ($user != false){
@@ -34,9 +40,10 @@ class UserController extends CI_Controller {
 			}
 		}
 	    else
-		{	// si no tiene permisos
-			$this->load->view('auth/logout');
-		}
+			{	
+				// si no tiene permisos
+				$this->load->view('auth/logout');
+			}
 	}
 
 	//muestro vista con formulario para crear usuario
@@ -130,12 +137,18 @@ class UserController extends CI_Controller {
 
 	//retorna true si el user_id que recibo es el mismo que el que esta logueado o si es admin
 	private function checkPermision($user_id){
-		if ($this->session->userdata('type') == 'admin' or  $this->session->userdata('id')== $user_id){
+		if ( ($this->session->userdata('type') == 'admin') or ($this->session->userdata('user_id')== $user_id)){
 			return true;
 		}
 		return false;
 	}
 
+	private function isAdmin(){
+		if ($this->session->userdata('type') == 'admin'){
+			return true;
+		}
+		return false;
+	}
 	//revis si tiene sesion iniciada sino lo saco del sistema
 	private function is_autenticate(){
 		if (!$this->session->userdata('is_logued_in')){			

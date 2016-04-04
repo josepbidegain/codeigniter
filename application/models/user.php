@@ -47,6 +47,7 @@ class User extends CI_Model{
             'name' => $data['name'],
             'email' => $data['email'],            
             'password' => sha1($data['password']),
+            'type' => $data['type'],            
             'active' => 1,
             'date_added' => date('Y-m-j H:i:s')
         );
